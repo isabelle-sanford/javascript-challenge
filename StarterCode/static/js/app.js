@@ -24,8 +24,7 @@ function unique(arr) { // thank you stackoverflow https://stackoverflow.com/ques
 // cities
 var cityDrops = d3.select("#city-options");
 
-var allCities = [];
-data.forEach(sighting => allCities.push(sighting.city));
+var allCities = data.map(sighting => sighting.city);
 var cityList = unique(allCities);
 
 cityList.forEach(city => {
@@ -36,8 +35,7 @@ cityList.forEach(city => {
 // states
 var stateDrops = d3.select("#state-options");
 
-var allStates = [];
-data.forEach(sighting => allStates.push(sighting.state));
+var allStates = data.map(sighting => sighting.state);
 var stateList = unique(allStates);
 
 stateList.forEach(state => {
@@ -48,8 +46,7 @@ stateList.forEach(state => {
 // countries
 var countryDrops = d3.select("#country-options");
 
-var allCountries = [];
-data.forEach(sighting => allCountries.push(sighting.country));
+var allCountries = data.map(sighting => sighting.country);
 var countryList = unique(allCountries);
 
 countryList.forEach(country => {
@@ -60,8 +57,7 @@ countryList.forEach(country => {
 // shapes
 var shapeDrops = d3.select("#shape-options");
 
-var allShapes = [];
-data.forEach(sighting => allShapes.push(sighting.shape));
+var allShapes = data.map(sighting => sighting.shape);
 var shapeList = unique(allShapes);
 
 shapeList.forEach(shape => {
@@ -70,7 +66,7 @@ shapeList.forEach(shape => {
 });
 
 
-function runEnter() { // BASIC VERSION
+function runEnterBasic() { // BASIC VERSION
 
     d3.event.preventDefault();
 
@@ -92,6 +88,36 @@ function runEnter() { // BASIC VERSION
 
 };
 
+
+function runEnter()
+ {
+     d3.event.preventDefault();
+
+     var inDate = d3.select("#datetime").property("value");
+     var inCity = d3.select("#city-options").property("value");
+     var inState = d3.select("#state-options").property("value");
+     var inCountry = d3.select("#country-options").property("value");
+     var inShape = d3.select("#shape-options").property("value");
+
+     var filtered = data.filter(item => {
+         return (item.date === inDate && 
+            item.city === inCity && 
+            item.state === inState && 
+            item.country === inCountry && 
+            item.shape === inShape);
+     });
+
+     tbody.html("");
+
+     filtered.forEach(sighting => {
+        var row = tbody.append("tr");
+        Object.entries(sighting).forEach(function([key, value]) {
+            var cell = row.append("td");
+            cell.text(value);
+        });
+    });
+
+ }
 
 // initial setup
 data.forEach(function(sighting) {

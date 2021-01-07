@@ -100,24 +100,20 @@ function runEnter()
      var inShape = d3.select("#shape-options").property("value");
 
 
-
+    // this is definitely not an efficient way to go about this
      var filtered = data.filter(item => {
          let fits = true;
-        if (inDate !== "All" && item.date !== inDate) {
+        if ((inDate !== "") && (item.date !== inDate)) {
             fits = false;
-            console.log(inDate);
         } if((inCity !== "All") && (item.city !== inCity)) {
             fits = false;
-            console.log("All" !== inCity);
-        } if (inState !== "All" && item.state !== inState) {
+        } if ((inState !== "All") && (item.state !== inState)) {
             fits = false;
             console.log(inState);
-        } if (inCountry !== "All" && item.country !== inCountry) {
+        } if ((inCountry !== "All") && (item.country !== inCountry)) {
             fits = false;
-            console.log(inCountry);
-        } if (inShape !== "All" && item.shape !== inShape) {
+        } if ((inShape !== "All") && (item.shape !== inShape)) {
             fits = false;
-            console.log(inShape);
         }
 
         if (fits) {

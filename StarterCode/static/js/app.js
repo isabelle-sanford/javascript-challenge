@@ -99,12 +99,30 @@ function runEnter()
      var inCountry = d3.select("#country-options").property("value");
      var inShape = d3.select("#shape-options").property("value");
 
+
+
      var filtered = data.filter(item => {
-         return (item.date === inDate && 
-            item.city === inCity && 
-            item.state === inState && 
-            item.country === inCountry && 
-            item.shape === inShape);
+         let fits = true;
+        if (inDate !== "All" && item.date !== inDate) {
+            fits = false;
+            console.log(inDate);
+        } if((inCity !== "All") && (item.city !== inCity)) {
+            fits = false;
+            console.log("All" !== inCity);
+        } if (inState !== "All" && item.state !== inState) {
+            fits = false;
+            console.log(inState);
+        } if (inCountry !== "All" && item.country !== inCountry) {
+            fits = false;
+            console.log(inCountry);
+        } if (inShape !== "All" && item.shape !== inShape) {
+            fits = false;
+            console.log(inShape);
+        }
+
+        if (fits) {
+            return item;
+        }
      });
 
      tbody.html("");
